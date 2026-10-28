@@ -57,7 +57,7 @@ if menu == "🏠 Home":
     
     st.markdown("---")
     st.markdown("📲 **WhatsApp:** [Chat +65 8057 2762](https://wa.me/6580572762)")
-    st.markdown("🗺️ **Maps:** [Open Location](https://maps.app.goo.gl/mSMJu4YnH3gHghiV7)")
+    st.markdown("🗺️ **View on Map:** [Open Location]https://maps.app.goo.gl/mSMJu4YnH3gHghiV7")
 
 elif menu == "🧘 Daily Practice":
     st.header("🧘 Daily Practice")
