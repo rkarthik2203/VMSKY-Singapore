@@ -9,33 +9,7 @@ BLESSING_LEFT = "வாழ்க வையகம்"
 BLESSING_RIGHT = "வாழ்க வளமுடன்"
 import streamlit as st
 
-st.markdown("""
-### 🧘‍♀️ VMSKY Singapore - Regular Class Timings
 
-#### 👩 Ladies Only Classes
-**Tuesday, Wednesday, Thursday**
-🕤 Morning: 9:30 AM to 11:30 AM
-
-#### 👨‍👩‍👧‍👦 General Classes (Everyone)
-**Saturday & Sunday**
-🌅 Morning: 7:00 AM to 9:00 AM
-🌇 Evening: 6:00 PM to 8:00 PM
-
----
-#### ✨ Special Classes
-
-**Kayakalpam Yoga**
-🗓️ Every Month - 2nd Sunday
-🕜 1:30 PM to 5:30 PM
-
-**Introspection Course (Manavalakalai)**
-🗓️ Every Month - 3rd Sunday
-🕘 9:00 AM to 5:30 PM (Full Day)
-
----
-📍 **Venue:** VMSKY Trust, 126 Joo Seng Road, Singapore
-📞 **Contact us on WhatsApp for booking**
-""")
 # 16 Levels
 COURSES = [
     "1. Foundation Course - அடிப்படை பயிற்சி",
@@ -122,6 +96,38 @@ else:
                     st.button(f"Edit {c}", key=c)
                 else:
                     st.button(f"Join / View", key=c)
+
+
+    st.markdown("""
+### 🧘‍♀️ VMSKY Singapore - Regular Class Timings
+
+#### 👩 Ladies Only Classes
+**Tuesday, Wednesday, Thursday**
+🕤 Morning: 9:30 AM to 11:30 AM
+
+#### 👨‍👩‍👧‍👦 General Classes (Everyone)
+**Saturday & Sunday**
+🌅 Morning: 7:00 AM to 9:00 AM
+🌇 Evening: 6:00 PM to 8:00 PM
+
+---
+#### ✨ Special Classes
+
+**Kayakalpam Yoga**
+🗓️ Every Month - 2nd Sunday
+🕜 1:30 PM to 5:30 PM
+
+**Introspection Course (Manavalakalai)**
+🗓️ Every Month - 3rd Sunday
+🕘 9:00 AM to 5:30 PM (Full Day)
+
+---
+📍 **Venue:** VMSKY, Temple of Consciousness, 11 woodlands Close, #09-13, Singapore 737853
+https://maps.app.goo.gl/cyZrJrWo3r9bwiWx5
+st.link_button("📲 Contact us on WhatsApp - 8057 2762", "https://wa.me/6580572762?text=Vazhga%20Valamudan%20I%20want%20to%20join%20VMSKY%20Singapore%20class")
+
+st.markdown("[📲 Chat on WhatsApp for Booking](https://wa.me/6580572762)")**
+""")
     
     elif menu == "🧘 Daily Practice":
         st.header("Daily Practice Log")
