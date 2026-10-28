@@ -11,7 +11,7 @@ VENUE_NAME = "VMSKY Temple of Consciousness"
 VENUE_ADDRESS = "11 Woodlands Cl 09-13 Singapore 737853"
 MAPS_LINK = "https://www.google.com/maps/search/?api=1&query=11+Woodlands+Cl+Singapore"
 WHATSAPP_LINK = "https://wa.me/6580572762"
-WHATSAPP_MSG = "https://wa.me/6580572762?text=Vazhga%20Valamudan%20VMSKY%20Enquiry"
+WHATSAPP_MSG = "https://wa.me/6580572762?text=Vazhga%20Valamudan%20VMSKY%20Enquiry about Class"
 MASTER_PHONE = "80572762"
 MASTER_PASS = "master123"
 
@@ -34,7 +34,7 @@ def generate_qr(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    img = qr.make_image(fill='black', back_color='white')
+    img = qr.make_image(fill='blue', back_color='white')
     buf = io.BytesIO()
     img.save(buf, format='PNG')
     return buf.getvalue()
@@ -112,19 +112,29 @@ if menu == "Home":
     map_buttons()
     st.divider()
     st.subheader("Class Timings")
-    st.write("Ladies Class")
-    st.write("Tue 0930 to 1130")
-    st.write("Wed 0930 to 1130")
-    st.write("Thu 0930 to 1130")
-    st.write("Common Class")
-    st.write("Wed 1915 to 2045")
-    st.write("Sat 0700 to 0900")
-    st.write("Sat 1800 to 2000")
-    st.write("Sun 0700 to 0900")
-    st.write("Sun 1800 to 2000")
-    st.write("Special Class")
-    st.write("Kayakalpam 2nd Sunday 1330 to 1730")
-    st.write("Introspection 3rd Sunday 0900 to 1730")
+    
+    # Ladies Class - Pink Color Big Size
+    st.markdown("<h2 style='color:#E91E63; font-size:28px;'>Ladies Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Tue 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Wed 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Thu 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # Common Class - Blue Color Big Size
+    st.markdown("<h2 style='color:#1565C0; font-size:28px;'>Common Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Wed 07:15 PM to 08:45 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sat 07:00 AM to 09:00 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sat 06:00 PM to 08:00 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sun 07:00 AM to 09:00 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sun 06:00 PM to 08:00 PM</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # Special Class - Orange Color
+    st.markdown("<h2 style='color:#FF6F00; font-size:28px;'>Special Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#E65100; font-size:18px; font-weight:bold;'>Kayakalpam 2nd Sunday 01:30 PM to 05:30 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#E65100; font-size:18px; font-weight:bold;'>Introspection 3rd Sunday 09:00 AM to 05:30 PM</p>", unsafe_allow_html=True)
 
 # NEW REGISTRATION
 elif menu == "New Registration":
