@@ -37,10 +37,17 @@ def parse_qr(qr_text):
     try:
         parts = qr_text.split("|")
         if len(parts) >= 4 and parts[0] == "VMSKY":
-            return {"date": parts[1], "level": parts[2], "master_phone": parts[3], "valid": True}
+            result = {}
+            result["date"] = parts[1]
+            result["level"] = parts[2]
+            result["master_phone"] = parts[3]
+            result["valid"] = True
+            return result
     except:
         pass
-    return {"valid": False}
+    result2 = {}
+    result2["valid"] = False
+    return result2
 
 def show_class_timing():
     st.header("VMSKY Singapore - Regular Class Timings")
@@ -51,8 +58,10 @@ def show_class_timing():
     st.divider()
     st.subheader("Common Class")
     st.write("Wednesday: 07:15 PM to 08:45 PM")
-    st.write("Saturday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
-    st.write("Sunday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
+    st.write("Saturday: Morning 07:00 AM to 09:00 AM")
+    st.write("Evening 06:00 PM to 08:00 PM")
+    st.write("Sunday: Morning 07:00 AM to 09:00 AM")
+    st.write("Evening 06:00 PM to 08:00 PM")
     st.divider()
     st.subheader("Special Class")
     st.write("Kayakalpam Yoga: 2nd Sunday 01:30 PM to 05:30 PM")
@@ -106,10 +115,3 @@ elif menu == "New Registration":
                 st.error("Fill all * fields")
             elif password != confirm_pass:
                 st.error("Passwords do not match")
-            else:
-                new_member = {
-                    "Name": name,
-                    "Contact Number": contact,
-                    "Email Address": email,
-                    "DOB": str(dob),
-                    "Address":
