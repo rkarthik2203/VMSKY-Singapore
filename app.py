@@ -52,12 +52,14 @@ def show_class_timing():
     st.divider()
     st.subheader("Common Class")
     st.write("Wednesday: 07:15 PM to 08:45 PM")
-    st.write("Saturday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
-    st.write("Sunday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
+    st.write("Saturday: Morning 07:00 AM to 09:00 AM")
+    st.write("Evening 06:00 PM to 08:00 PM")
+    st.write("Sunday: Morning 07:00 AM to 09:00 AM")
+    st.write("Evening 06:00 PM to 08:00 PM")
     st.divider()
     st.subheader("Special Class")
-    st.write("Kayakalpam Yoga: Every Month 2nd Sunday 01:30 PM to 05:30 PM")
-    st.write("Introspection: Every Month 3rd Sunday 09:00 AM to 05:30 PM")
+    st.write("Kayakalpam Yoga: 2nd Sunday 01:30 PM to 05:30 PM")
+    st.write("Introspection: 3rd Sunday 09:00 AM to 05:30 PM")
 
 @st.cache_data(ttl=60)
 def load_members():
@@ -70,7 +72,6 @@ def load_members():
             return pd.DataFrame()
     return pd.DataFrame()
 
-# Initialize storage for new registrations and password changes
 if 'new_registrations' not in st.session_state:
     st.session_state['new_registrations'] = []
 if 'password_changes' not in st.session_state:
@@ -85,32 +86,26 @@ if menu == "Home":
     st.divider()
     show_class_timing()
 
-# ===== NEW REGISTRATION - Members fill by their own =====
 elif menu == "New Registration":
-    st.header("📝 New Member Registration")
+    st.header("New Member Registration")
     show_logo()
-    st.write("Fill your details - Master will approve and assign Level")
-    
+    st.write("Fill your details - Master will approve")
     with st.form("registration"):
         name = st.text_input("Full Name *")
-        contact = st.text_input("Mobile Number * (e.g. 91234567)")
+        contact = st.text_input("Mobile Number *")
         email = st.text_input("Email Address *")
         dob = st.date_input("Date of Birth", value=date(1990, 1, 1))
         address = st.text_area("Address")
-        emergency = st.text_input("Emergency Contact Number")
+        emergency = st.text_input("Emergency Contact")
         password = st.text_input("Create Password *", type="password")
         confirm_pass = st.text_input("Confirm Password *", type="password")
-        how_know = st.selectbox("How did you know about VMSKY?", ["Friend", "Facebook", "WhatsApp", "Temple", "Others"])
-        
+        how_know = st.selectbox("How did you know?", ["Friend", "Facebook", "WhatsApp", "Temple", "Others"])
         submit = st.form_submit_button("Register Now", type="primary")
-        
         if submit:
             if not name or not contact or not email or not password:
                 st.error("Please fill all * fields")
             elif password != confirm_pass:
                 st.error("Passwords do not match!")
-            elif len(contact) < 8:
-                st.error("Enter valid mobile number")
             else:
                 new_member = {
                     "Name": name,
@@ -120,88 +115,185 @@ elif menu == "New Registration":
                     "Address": address,
                     "Emergency Contact": emergency,
                     "Password": password,
-                    "Level": "Exercise - Pending Master Approval",
+                    "Level": "Exercise - Pending",
                     "Attendance %": "0%",
                     "Registration Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "How Know": how_know,
                     "Status": "Pending"
                 }
                 st.session_state['new_registrations'].append(new_member)
-                st.success(f"Vazhga Valamudan {name}! Registration Success 🙏")
-                st.info("Master will review and assign your Level. You can login after approval.")
+                st.success(f"Vazhga Valamudan {name}! Registration Success")
                 st.balloons()
-                
-                # Show for download
-                st.write("Your Registration Details:")
-                st.json(new_member)
 
     if st.session_state['new_registrations']:
         st.divider()
-        st.subheader("Recent Registrations (For Master)")
         df_new = pd.DataFrame(st.session_state['new_registrations'])
         st.dataframe(df_new, use_container_width=True)
         csv = df_new.to_csv(index=False).encode('utf-8')
         st.download_button("Download New Registrations", csv, f"new_members_{date.today()}.csv", "text/csv")
-        st.caption("Master: Copy these to your Google Sheet to enable login")
 
-# ===== CHANGE PASSWORD - Member and Master =====
 elif menu == "Change Password":
-    st.header("🔑 Change Password")
+    st.header("Change Password")
     show_logo()
-    
     user_type = st.radio("I am:", ["Member", "Master"])
-    
     if user_type == "Member":
         st.subheader("Member Change Password")
         phone = st.text_input("Your Contact Number")
         old_pass = st.text_input("Old Password", type="password")
         new_pass = st.text_input("New Password", type="password")
         confirm_new = st.text_input("Confirm New Password", type="password")
-        
         if st.button("Change Member Password", type="primary"):
             if not phone or not old_pass or not new_pass:
                 st.error("Fill all fields")
             elif new_pass != confirm_new:
                 st.error("New passwords do not match")
-            elif len(new_pass) < 4:
-                st.error("New password must be at least 4 characters")
             else:
                 df = load_members()
                 if not df.empty:
-                    phone_col = None
-                    for c in df.columns:
-                        if "contact" in c.lower() or "phone" in c.lower():
-                            phone_col = c
-                            break
-                    if phone_col:
-                        user = df[df[phone_col].astype(str).str.strip() == str(phone).strip()]
-                        if not user.empty:
-                            # In real sheet, you need to update via Google Sheets API
-                            st.session_state['password_changes'][phone] = new_pass
-                            st.success(f"Password changed for {phone}! 🙏")
-                            st.warning("Note: For Google Sheet, Master needs to manually update password in sheet. This change is saved locally for now.")
-                            st.info(f"Master: Please update in Google Sheet - Contact {phone} New Password: {new_pass}")
-                        else:
-                            st.error("Member not found")
-                else:
-                    # Demo
                     st.session_state['password_changes'][phone] = new_pass
-                    st.success("Demo: Password changed locally! Add to Google Sheet manually")
-    
-    else:  # Master
+                    st.success(f"Password changed for {phone}")
+                    st.warning("Master: Update Google Sheet manually")
+                else:
+                    st.session_state['password_changes'][phone] = new_pass
+                    st.success("Demo: Password changed locally")
+    else:
         st.subheader("Master Change Password")
         master_phone = st.text_input("Master Phone")
         old_master_pass = st.text_input("Old Master Password", type="password")
         new_master_pass = st.text_input("New Master Password", type="password")
         confirm_master_new = st.text_input("Confirm New Master Password", type="password")
-        
         if st.button("Change Master Password", type="primary"):
             if master_phone == MASTER_PHONE and old_master_pass == MASTER_PASS:
                 if new_master_pass != confirm_master_new:
-                    st.error("New passwords do not match")
-                elif len(new_master_pass) < 4:
-                    st.error("Password too short")
+                    st.error("Passwords do not match")
                 else:
                     st.session_state['master_new_pass'] = new_master_pass
-                    st.success("Master Password Changed! 🙏")
-                    st.warning(f"New Master Password is: {new_master_pass} - Please update in app.py MASTER
+                    st.success("Master Password Changed!")
+                    st.code(new_master_pass)
+                    st.warning("Update in app.py MASTER_PASS")
+            else:
+                st.error("Invalid Master credentials")
+
+elif menu == "Member Login":
+    st.header("Member Login - Scan Master QR")
+    show_logo()
+    phone = st.text_input("Your Contact Number")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        df = load_members()
+        if phone in st.session_state['password_changes']:
+            if password == st.session_state['password_changes'][phone]:
+                st.session_state['member_phone'] = phone
+                st.session_state['member_name'] = "Member"
+                st.success("Login Success with NEW password")
+        elif not df.empty:
+            phone_col = None
+            for c in df.columns:
+                if "contact" in c.lower() or "phone" in c.lower():
+                    phone_col = c
+                    break
+            if phone_col:
+                user = df[df[phone_col].astype(str).str.strip() == str(phone).strip()]
+                if not user.empty:
+                    st.session_state['member_phone'] = phone
+                    st.session_state['member_name'] = "Member"
+                    st.success("Vazhga Valamudan!")
+        else:
+            st.session_state['member_phone'] = phone if phone else "91234567"
+            st.session_state['member_name'] = "Demo Member"
+            st.success("Demo Login OK")
+
+    if st.session_state.get('member_phone'):
+        st.divider()
+        st.subheader("Scan Master QR - Level LOCKED")
+        master_qr_code = st.text_input("Enter Master QR Text", placeholder="VMSKY|DATE|LEVEL|...")
+        if master_qr_code:
+            parsed = parse_qr(master_qr_code)
+            if parsed["valid"]:
+                st.success(f"QR Valid! Class: {parsed['level']}")
+                st.info(f"LOCKED CLASS: {parsed['level']} - ONLY this class")
+                if st.button(f"Confirm for {parsed['level']}"):
+                    if 'attendance_log' not in st.session_state:
+                        st.session_state['attendance_log'] = []
+                    entry = {
+                        "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "Contact Number": st.session_state['member_phone'],
+                        "Name": st.session_state['member_name'],
+                        "Level": parsed['level'],
+                        "Type": "Member"
+                    }
+                    st.session_state['attendance_log'].append(entry)
+                    st.success(f"Attendance for {parsed['level']} ONLY!")
+                    st.balloons()
+            else:
+                st.error("Invalid QR")
+
+elif menu == "Master Login":
+    st.header("Master Login - Full Control")
+    show_logo()
+    m_phone = st.text_input("Master Phone")
+    m_pass = st.text_input("Master Password", type="password")
+    master_current_pass = st.session_state.get('master_new_pass', MASTER_PASS)
+    if st.button("Master Login"):
+        if m_phone == MASTER_PHONE and m_pass == master_current_pass:
+            st.session_state['master'] = True
+            st.session_state['master_phone'] = m_phone
+            st.success("Master Login Success!")
+        else:
+            st.error("Invalid")
+
+    if st.session_state.get('master'):
+        st.divider()
+        tab1, tab2, tab3 = st.tabs(["Generate QR", "Change Level", "New Registrations"])
+        with tab1:
+            st.subheader("Generate LOCKED QR")
+            today = date.today().strftime("%Y-%m-%d")
+            locked_level = st.selectbox("LOCK Class Type", 
+                ["Exercise", "Kayakalpam", "Agnai", "Santhi", "Thanduvadasuthi", "Thuriyam", 
+                 "Introspection 1", "Introspection 2", "Introspection 3", "Bramaganam", "Arulnithi"])
+            timestamp = datetime.now().strftime("%H%M%S")
+            qr_data = f"VMSKY|{today}|{locked_level}|{st.session_state.get('master_phone', MASTER_PHONE)}|{timestamp}"
+            st.write(f"QR: {qr_data}")
+            qr_image = generate_qr(qr_data)
+            st.image(qr_image, caption=f"LOCKED QR: {locked_level}", width=320)
+        with tab2:
+            st.subheader("Change Member Level - ONLY Master")
+            member_phone_to_change = st.text_input("Member Contact Number")
+            new_level = st.selectbox("New Level", 
+                ["Exercise", "Kayakalpam", "Agnai", "Santhi", "Thanduvadasuthi", "Thuriyam", 
+                 "Introspection 1", "Introspection 2", "Introspection 3", "Bramaganam", "Arulnithi", "Master"])
+            if st.button("Update Level"):
+                if member_phone_to_change:
+                    if 'level_changes' not in st.session_state:
+                        st.session_state['level_changes'] = {}
+                    st.session_state['level_changes'][member_phone_to_change] = new_level
+                    st.success(f"Level changed for {member_phone_to_change} to {new_level}")
+        with tab3:
+            st.subheader("New Registrations")
+            if st.session_state['new_registrations']:
+                df_new = pd.DataFrame(st.session_state['new_registrations'])
+                st.dataframe(df_new, use_container_width=True)
+                csv = df_new.to_csv(index=False).encode('utf-8')
+                st.download_button("Download", csv, f"new_members_{date.today()}.csv", "text/csv")
+            else:
+                st.info("No new registrations")
+
+elif menu == "Class Timings":
+    show_logo()
+    show_class_timing()
+    show_map_buttons()
+
+elif menu == "Members Details":
+    st.header("Members Details")
+    show_logo()
+    df = load_members()
+    all_data = []
+    if not df.empty:
+        all_data.append(df)
+    if st.session_state['new_registrations']:
+        all_data.append(pd.DataFrame(st.session_state['new_registrations']))
+    if all_data:
+        combined = pd.concat(all_data, ignore_index=True) if len(all_data) > 1 else all_data[0]
+        st.success(f"Total Members: {len(combined)}")
+        search = st.text_input("Search by Name or Contact")
+        if search:
+           
