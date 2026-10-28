@@ -7,7 +7,35 @@ APP_COLOR_PRIMARY = "#0A3D8A"  # Change to any color: #800000 = maroon, #006400 
 APP_COLOR_ORANGE = "#FF8C00"
 BLESSING_LEFT = "வாழ்க வையகம்"
 BLESSING_RIGHT = "வாழ்க வளமுடன்"
+import streamlit as st
 
+st.markdown("""
+### 🧘‍♀️ VMSKY Singapore - Regular Class Timings
+
+#### 👩 Ladies Only Classes
+**Tuesday, Wednesday, Thursday**
+🕤 Morning: 9:30 AM to 11:30 AM
+
+#### 👨‍👩‍👧‍👦 General Classes (Everyone)
+**Saturday & Sunday**
+🌅 Morning: 7:00 AM to 9:00 AM
+🌇 Evening: 6:00 PM to 8:00 PM
+
+---
+#### ✨ Special Classes
+
+**Kayakalpam Yoga**
+🗓️ Every Month - 2nd Sunday
+🕜 1:30 PM to 5:30 PM
+
+**Introspection Course (Manavalakalai)**
+🗓️ Every Month - 3rd Sunday
+🕘 9:00 AM to 5:30 PM (Full Day)
+
+---
+📍 **Venue:** VMSKY Trust, 126 Joo Seng Road, Singapore
+📞 **Contact us on WhatsApp for booking**
+""")
 # 16 Levels
 COURSES = [
     "1. Foundation Course - அடிப்படை பயிற்சி",
