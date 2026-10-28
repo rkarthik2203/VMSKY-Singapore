@@ -56,9 +56,9 @@ if menu == "🏠 Home":
 
 # Also keep your short link as backup
 st.caption("If app not open, [Click here](https://maps.app.goo.gl/mSMJu4YnH3gHghiV7)")
-    st.markdown("---")
-    st.markdown("📲 **WhatsApp:** [Chat +65 8057 2762](https://wa.me/6580572762)")
-    st.markdown("🗺️ **View on Map:** [Open Location]https://maps.app.goo.gl/mSMJu4YnH3gHghiV7")
+st.markdown("---")
+st.markdown("📲 **WhatsApp:** [Chat +65 8057 2762](https://wa.me/6580572762)")
+st.markdown("🗺️ **View on Map:** [Open Location]https://maps.app.goo.gl/mSMJu4YnH3gHghiV7")
 
 elif menu == "🧘 Daily Practice":
     st.header("🧘 Daily Practice")
