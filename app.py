@@ -5,8 +5,7 @@ import os
 st.set_page_config(page_title="VMSKY Singapore", page_icon="🙏", layout="centered")
 
 # Sidebar Menu
-menu = st.sidebar.selectbox("Menu", ["🏠 Home", "🧘 Daily Practice", "📅 Class Timings", "📍 Contact Us"])
-
+menu = st.sidebar.selectbox("Menu", ["🏠 Home", "🔐 Member Login", "🧘 Daily Practice", "📅 Class Timings", "👥 Members Details", "📍 Contact Us"])
 # ===== HOME PAGE =====
 if menu == "🏠 Home":
     st.markdown("<h1 style='text-align: center; color: #FF9933; font-size: 26px; font-weight: bold; text-shadow: 1px 1px 2px #FFD700;'>Vazhga Vaiyagam Vazhga Valamudan 🙏</h1>", unsafe_allow_html=True)
