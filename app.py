@@ -9,6 +9,11 @@ menu = st.sidebar.selectbox("Menu", ["🏠 Home", "🧘 Daily Practice", "📅 C
 # ===== HOME PAGE =====
 if menu == "🏠 Home":
     st.title("Vazhga Vaiyagam Vazhga Valamudan")
+    import os
+if os.path.exists("maharishi_final_logo.png"):
+    st.image("maharishi_final_logo.png", use_container_width=True)
+else:
+    st.image("https://raw.githubusercontent.com/your-username/vmsky-singapore/main/maharishi_final_logo.png", use_container_width=True)
     
     # Maharishi Photo - Your Final Logo
     try:
@@ -26,8 +31,7 @@ if menu == "🏠 Home":
         st.metric("Members", "250+")
     
     
-    st.success("Your App is Working with your Final Maharishi logo! 🙏")
-    
+    st.success
     st.divider()
     
     # ===== CLASS TIMING - NOW COMES DOWN =====
