@@ -52,26 +52,7 @@ if menu == "🏠 Home":
     col1, col2 = st.columns(2)
     with col1:
         st.link_button("📲 WhatsApp 8057 2762", "https://wa.me/6580572762?text=Vazhga%20Valamudan%20I%20want%20to%20join%20VMSKY%20Singapore%20class")
-    with col2:
-        # ===== DIRECT OPEN IN GOOGLE MAPS APP =====
-st.markdown("""
-<a href="https://www.google.com/maps/search/?api=1&query=126+Joo+Seng+Road+Singapore+545191" target="_blank" style="text-decoration:none;">
-    <div style="background-color:#4285F4; color:white; padding:12px 20px; border-radius:10px; text-align:center; font-weight:bold; font-size:14px;">
-        🗺️ Open in Google Maps App
-    </div>
-</a>
-""", unsafe_allow_html=True)
 
-st.write("") # space
-
-# For iPhone users - backup link
-st.markdown("""
-<a href="comgooglemaps://?q=126+Joo+Seng+Road+Singapore&center=1.335,103.888&zoom=17" style="text-decoration:none;">
-    <div style="background-color:white; color:#4285F4; padding:10px 20px; border-radius:10px; text-align:center; font-weight:bold; font-size:13px; border:2px solid #4285F4;">
-        📱 Open in Maps App (iPhone)
-    </div>
-</a>
-""", unsafe_allow_html=True)
 
 # Also keep your short link as backup
 st.caption("If app not open, [Click here](https://maps.app.goo.gl/mSMJu4YnH3gHghiV7)")
