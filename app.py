@@ -21,8 +21,12 @@ def show_logo():
         if os.path.exists(f):
             st.image(f, use_container_width=True)
 
-def show_map_buttons():
+def whatsapp_button():
+    st.link_button("Chat on WhatsApp - 80572762", WHATSAPP)
+
+def map_buttons():
     st.link_button("Open in Google Maps App", f"https://www.google.com/maps/search/?api=1&query={MAPS_DEST}")
+    st.link_button("Get Directions", f"https://www.google.com/maps/dir/?api=1&destination={MAPS_DEST}")
 
 def generate_qr(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
@@ -58,14 +62,12 @@ def show_class_timing():
     st.divider()
     st.subheader("Common Class")
     st.write("Wednesday: 07:15 PM to 08:45 PM")
-    st.write("Saturday: Morning 07:00 AM to 09:00 AM")
-    st.write("Evening 06:00 PM to 08:00 PM")
-    st.write("Sunday: Morning 07:00 AM to 09:00 AM")
-    st.write("Evening 06:00 PM to 08:00 PM")
+    st.write("Saturday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
+    st.write("Sunday: Morning 07:00 AM to 09:00 AM | Evening 06:00 PM to 08:00 PM")
     st.divider()
     st.subheader("Special Class")
-    st.write("Kayakalpam Yoga: 2nd Sunday 01:30 PM to 05:30 PM")
-    st.write("Introspection: 3rd Sunday 09:00 AM to 05:30 PM")
+    st.write("Kayakalpam Yoga: Every Month 2nd Sunday 01:30 PM to 05:30 PM")
+    st.write("Introspection: Every Month 3rd Sunday 09:00 AM to 05:30 PM")
 
 @st.cache_data(ttl=60)
 def load_members():
@@ -87,31 +89,95 @@ if 'attendance_log' not in st.session_state:
 if 'level_changes' not in st.session_state:
     st.session_state['level_changes'] = {}
 
+# ===== HOME - FIXED WHATSAPP =====
 if menu == "Home":
-    st.markdown("<h1 style='text-align:center; color:#FF8C00; font-size:20px;'>Vazhga Vaiyagam Vazhga Valamudan</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center; color:#FF8C00; font-size:22px;'>Vazhga Vaiyagam Vazhga Valamudan</h1>", unsafe_allow_html=True)
     show_logo()
     st.write(VENUE_NAME)
     st.write(VENUE_ADDRESS)
-    show_map_buttons()
+    st.divider()
+    st.subheader("Contact Us on WhatsApp")
+    whatsapp_button()
+    st.divider()
+    st.subheader("Location")
+    map_buttons()
     st.divider()
     show_class_timing()
 
+# ===== NEW REGISTRATION - FIXED SUBMIT =====
 elif menu == "New Registration":
     st.header("New Member Registration")
     show_logo()
-    with st.form("reg_form"):
-        name = st.text_input("Full Name *")
-        contact = st.text_input("Mobile Number *")
-        email = st.text_input("Email Address *")
-        dob = st.date_input("Date of Birth", value=date(1990, 1, 1))
-        address = st.text_area("Address")
-        emergency = st.text_input("Emergency Contact")
-        password = st.text_input("Create Password *", type="password")
-        confirm_pass = st.text_input("Confirm Password *", type="password")
-        how_know = st.selectbox("How did you know?", ["Friend", "Facebook", "WhatsApp", "Temple", "Others"])
-        submit = st.form_submit_button("Register Now", type="primary")
-        if submit:
-            if not name or not contact or not email or not password:
-                st.error("Fill all * fields")
-            elif password != confirm_pass:
-                st.error("Passwords do not match")
+    st.write("Fill all details - Master will approve")
+    st.divider()
+    
+    name = st.text_input("Full Name *", key="reg_name")
+    contact = st.text_input("Mobile Number *", key="reg_contact")
+    email = st.text_input("Email Address *", key="reg_email")
+    dob = st.date_input("Date of Birth", value=date(1990, 1, 1), key="reg_dob")
+    address = st.text_area("Address", key="reg_address")
+    emergency = st.text_input("Emergency Contact", key="reg_emer")
+    password = st.text_input("Create Password *", type="password", key="reg_pass")
+    confirm_pass = st.text_input("Confirm Password *", type="password", key="reg_cpass")
+    how_know = st.selectbox("How did you know?", ["Friend", "Facebook", "WhatsApp", "Temple", "Others"], key="reg_how")
+    
+    if st.button("Register Now", type="primary"):
+        if not name or not contact or not email or not password:
+            st.error("Please fill all * fields")
+        elif password != confirm_pass:
+            st.error("Passwords do not match!")
+        elif len(contact) < 8:
+            st.error("Enter valid mobile number")
+        else:
+            new_member = {}
+            new_member["Name"] = name
+            new_member["Contact Number"] = contact
+            new_member["Email Address"] = email
+            new_member["DOB"] = str(dob)
+            new_member["Address"] = address
+            new_member["Emergency Contact"] = emergency
+            new_member["Password"] = password
+            new_member["Level"] = "Exercise - Pending"
+            new_member["Registration Date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            new_member["Status"] = "Pending"
+            st.session_state['new_registrations'].append(new_member)
+            st.success(f"Vazhga Valamudan {name}! Registration Success! Please go to Member Login")
+            st.balloons()
+    
+    st.divider()
+    if st.session_state['new_registrations']:
+        st.subheader("Your Registrations - Download for Master")
+        df_new = pd.DataFrame(st.session_state['new_registrations'])
+        st.dataframe(df_new, use_container_width=True)
+        csv = df_new.to_csv(index=False).encode('utf-8')
+        st.download_button("Download New Registrations", csv, f"new_members_{date.today()}.csv", "text/csv")
+    else:
+        st.info("No registrations yet - Fill above form and click Register Now")
+
+# ===== MEMBER LOGIN - FIXED EMPTY =====
+elif menu == "Member Login":
+    st.header("Member Login")
+    show_logo()
+    st.write("Login and Scan Master QR - Level LOCKED by Master")
+    st.divider()
+    
+    phone = st.text_input("Your Contact Number", key="mem_phone")
+    password = st.text_input("Password", type="password", key="mem_pass")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Login", type="primary"):
+            st.session_state['member_phone'] = phone
+            st.session_state['member_name'] = phone
+            st.success(f"Login Success! Phone: {phone}")
+            st.rerun()
+    with col2:
+        if st.button("Logout"):
+            st.session_state['member_phone'] = ""
+            st.session_state['member_name'] = ""
+            st.info("Logged out")
+    
+    if st.session_state.get('member_phone'):
+        st.divider()
+        st.subheader("Scan Master QR - Level LOCKED")
+        st.write("Ask Master to
