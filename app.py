@@ -1,4 +1,4 @@
-import streamlit as st
+ import streamlit as st
 from PIL import Image
 import os
 
@@ -60,14 +60,14 @@ st.markdown("---")
 st.markdown("📲 **WhatsApp:** [Chat +65 8057 2762](https://wa.me/6580572762)")
 st.markdown("🗺️ **View on Map:** [Open Location]https://maps.app.goo.gl/mSMJu4YnH3gHghiV7")
 
-elif menu == "🧘 Daily Practice":
+elif menu == "Daily Practice":
     st.header("🧘 Daily Practice")
     st.write("Daily meditation and exercises...")
 
-elif menu == "📅 Class Timings":
+elif menu == "Class Timings":
     st.header("📅 Class Timings - Same as Home page")
 
-elif menu == "📍 Contact Us":
+elif menu == "Contact Us":
     st.header("📍 Contact Us")
     st.write("VMSKY TOC, 11,Woodlands close, #09-13 Singapore")
     st.link_button("📲 WhatsApp Us", "https://wa.me/6580572762?text=Vazhga%20Valamudan")
