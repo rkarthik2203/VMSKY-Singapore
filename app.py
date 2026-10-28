@@ -8,8 +8,8 @@ import io
 st.set_page_config(page_title="VMSKY Singapore", layout="centered")
 
 VENUE_NAME = "VMSKY Temple"
-VENUE_ADDRESS = "11 Woodlands Cl #09-13 Singapore 737853"
-MAPS_DEST = "11+Woodlands+Cl+%2309-13+Singapore+737853"
+VENUE_ADDRESS = "11 Woodlands Cl Singapore"
+MAPS_DEST = "11+Woodlands+Cl+Singapore"
 WHATSAPP = "https://wa.me/6580572762"
 MASTER_PHONE = "80572762"
 MASTER_PASS = "master123"
@@ -25,7 +25,7 @@ def whatsapp_button():
     st.link_button("Chat on WhatsApp", WHATSAPP)
 
 def map_buttons():
-    st.link_button("Open Google Maps", f"https://www.google.com/maps/search/?api=1&query={MAPS_DEST}")
+    st.link_button("Open Maps", "https://www.google.com/maps/search/?api=1&query=" + MAPS_DEST)
 
 def generate_qr(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
@@ -52,12 +52,33 @@ def parse_qr(qr_text):
     r2["valid"] = False
     return r2
 
-def show_class_timing():
-    st.header("Class Timings")
-    st.write("Ladies: Tue Wed Thu 09:30-11:30")
-    st.write("Common: Wed 19:15-20:45")
-    st.write("Sat Sun 07:00-09:00 and 18:00-20:00")
-    st.write("Kayakalpam: 2nd Sun 13:30-17:30")
-    st.write("Introspection: 3rd Sun 09:00-17:30")
+def load_members():
+    url = st.secrets.get("SHEET_URL", "")
+    if url:
+        try:
+            df = pd.read_csv(url)
+            return df
+        except:
+            return pd.DataFrame()
+    return pd.DataFrame()
 
-@st.cache_data(tt
+if 'new_registrations' not in st.session_state:
+    st.session_state['new_registrations'] = []
+if 'password_changes' not in st.session_state:
+    st.session_state['password_changes'] = {}
+if 'attendance_log' not in st.session_state:
+    st.session_state['attendance_log'] = []
+if 'level_changes' not in st.session_state:
+    st.session_state['level_changes'] = {}
+
+if menu == "Home":
+    st.title("Vazhga Vaiyagam")
+    show_logo()
+    st.write(VENUE_NAME)
+    st.write(VENUE_ADDRESS)
+    st.divider()
+    whatsapp_button()
+    st.divider()
+    map_buttons()
+    st.divider()
+    st.write("Ladies Tue Wed Thu 09:30-11:
