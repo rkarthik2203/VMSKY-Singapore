@@ -9,8 +9,7 @@ menu = st.sidebar.selectbox("Menu", ["🏠 Home", "🧘 Daily Practice", "📅 C
 
 # ===== HOME PAGE =====
 if menu == "🏠 Home":
-    st.title("Vazhga Vaiyagam Vazhga Valamudan")
-    
+    st.markdown("<h1 style='text-align: center; color: #FF9933; font-size: 26px; font-weight: bold; text-shadow: 1px 1px 2px #FFD700;'>Vazhga Vaiyagam Vazhga Valamudan 🙏</h1>", unsafe_allow_html=True)
     # Picture will now come - using your logo.png
     if os.path.exists("logo.png"):
         st.image("logo.png", use_container_width=True)
