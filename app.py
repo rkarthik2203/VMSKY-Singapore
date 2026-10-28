@@ -306,12 +306,32 @@ elif menu == "Master Login":
 elif menu == "Class Timings":
     show_logo()
     st.header("Class Timings")
-    st.write("Ladies Tue Wed Thu 0930 to 1130")
-    st.write("Common Wed 1915 to 2045")
-    st.write("Sat Sun 0700 to 0900")
-    st.write("Sat Sun 1800 to 2000")
-    st.write("Kayakalpam 2nd Sun 1330 to 1730")
-    st.write("Introspection 3rd Sun 0900 to 1730")
+    
+        
+    st.subheader("Class Timings")
+    
+    # Ladies Class - Pink Color Big Size
+    st.markdown("<h2 style='color:#E91E63; font-size:28px;'>Ladies Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Tue 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Wed 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#880E4F; font-size:20px; font-weight:bold;'>Thu 09:30 AM to 11:30 AM</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # Common Class - Blue Color Big Size
+    st.markdown("<h2 style='color:#1565C0; font-size:28px;'>Common Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Wed 07:15 PM to 08:45 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sat 07:00 AM to 09:00 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sat 06:00 PM to 08:00 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sun 07:00 AM to 09:00 AM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#0D47A1; font-size:20px; font-weight:bold;'>Sun 06:00 PM to 08:00 PM</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # Special Class - Orange Color
+    st.markdown("<h2 style='color:#FF6F00; font-size:28px;'>Special Class</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#E65100; font-size:18px; font-weight:bold;'>Kayakalpam 2nd Sunday 01:30 PM to 05:30 PM</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#E65100; font-size:18px; font-weight:bold;'>Introspection 3rd Sunday 09:00 AM to 05:30 PM</p>", unsafe_allow_html=True)
     st.divider()
     whatsapp_buttons()
     map_buttons()
