@@ -32,18 +32,18 @@ if menu == "🏠 Home":
     st.header("📅 VMSKY Singapore - Regular Class Timings")
     
     st.subheader("👩 Ladies Only Classes")
-    st.write("Tuesday: 7:00 PM - 8:30 PM")
-    st.write("Thursday: 7:00 PM - 8:30 PM")
-    st.write("Saturday: 4:00 PM - 5:30 PM")
+    st.write("Tuesday: 9:30 AM - 11:30 AM")
+    st.write("Thursday: 9:30 AM - 11:30 AM")
+    st.write("Saturday: 9:30 AM - 11:30 AM")
     
     st.subheader("👥 General Classes")
-    st.write("Sunday: 9:00 AM - 10:30 AM")
-    st.write("Wednesday: 7:00 PM - 8:30 PM")
-    st.write("Friday: 7:00 PM - 8:30 PM")
+    st.write("Sunday: 7:00 AM - 09:00 AM : 06:00 PM- 08:00 PM")
+    st.write("Sunday: 7:00 AM - 09:00 AM : 06:00 PM- 08:00 PM")
+    st.write("Wednesday: 7:15 PM - 8:45 PM")
     
     st.subheader("⭐ Special Classes")
-    st.write("Kayakalpa Yoga: Every 2nd Saturday")
-    st.write("Introspection: Last Sunday")
+    st.write("Kayakalpa Yoga: Every 2nd Sunday 01:30 PM- 05:30 PM")
+    st.write("Introspection: Every 3rd Sunday 09:00 AM- 05:30 PM")
     
     st.divider()
     
